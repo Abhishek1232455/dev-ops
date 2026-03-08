@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MagicURL – Enchanted Link Shortener</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="stars"></div>
+    <div class="nebula"></div>
+    <main class="portal-layout">
+      <header class="hero">
+        <h1 class="hero-title">
+          Magic<span>URL</span>
+        </h1>
+        <p class="hero-subtitle">
+          Whisper a long URL into the spellbook and conjure a tiny, powerful link.
+        </p>
+      </header>
+
+      <section class="spellbook-card">
+        <form id="spell-form" class="spell-form">
+          <label for="longUrl" class="field-label">Long URL incantation</label>
+          <div class="input-row">
+            <div class="input-wrapper">
+              <input
+                type="url"
+                id="longUrl"
+                name="longUrl"
+                placeholder="https://your-very-long-and-mysterious-link.com/path/..."
+                required
+              />
+              <span class="input-glow"></span>
+            </div>
+            <button type="submit" class="cast-button">
+              <span class="btn-text">Cast Spell</span>
+              <span class="btn-orb"></span>
+            </button>
+          </div>
+        </form>
+
+        <div id="status-area" class="status-area" aria-live="polite">
+          <div id="loading" class="loading hidden">
+            <span class="orb orb-1"></span>
+            <span class="orb orb-2"></span>
+            <span class="orb orb-3"></span>
+            <span class="loading-text">Channeling arcane energies…</span>
+          </div>
+
+          <div id="error" class="message message-error hidden"></div>
+
+          <div id="result" class="message message-success hidden">
+            <p class="result-label">Your enchanted link:</p>
+            <div class="result-row">
+              <a id="shortUrl" href="#" target="_blank" rel="noopener"></a>
+              <button id="copyBtn" class="copy-button" type="button">
+                Copy
+              </button>
+            </div>
+            <p id="copyStatus" class="copy-status"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="lore">
+        <h2>How the magic works</h2>
+        <p>
+          Your long URL is etched into enchanted runes and guarded in a Mongo scroll.
+          Each short code is a unique sigil that redirects travelers back to the original realm.
+        </p>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span>Forged with ✨ Node, Mongo & Docker on the cloud.</span>
+    </footer>
+
+    <script src="script.js"></script>
+  </body>
+  </html>
+
