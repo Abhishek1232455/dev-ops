@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_REGISTRY = 'your-docker-registry.example.com'
+        DOCKER_REGISTRY = 'brutalabhi'
         IMAGE_NAME = 'magic-url-app'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
     }
@@ -44,7 +44,7 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-registry-creds', url: "https://${DOCKER_REGISTRY}") {
+                    withDockerRegistry(credentialsId: 'docker-registry-creds', url: "") {
                         bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
@@ -57,7 +57,7 @@ pipeline {
                     // Replace 'ec2-ssh-creds' with your Jenkins SSH credentials ID
                     sshagent (credentials: ['ec2-ssh-creds']) {
                         bat """
-                        ssh -o StrictHostKeyChecking=no ubuntu@your-ec2-host "docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}; docker rm -f magicurl-app || true; docker run -d --name magicurl-app -p 80:3000 --restart unless-stopped -e MONGO_URI='mongodb://mongo:27017/magicurl' ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+                        ssh -o StrictHostKeyChecking=no ubuntu@13.60.167.75 "docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}; docker rm -f magicurl-app || true; docker run -d --name magicurl-app -p 80:3000 --restart unless-stopped -e MONGO_URI='mongodb://mongo:27017/magicurl' ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                         """
                     }
                 }
