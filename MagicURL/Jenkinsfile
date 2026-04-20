@@ -61,7 +61,7 @@ pipeline {
                 script {
                     withCredentials([sshUserPrivateKey(credentialsId: 'ec2-ssh-creds', keyFileVariable: 'SSH_KEY', usernameVariable: 'SSH_USER')]) {
                         bat """
-                        ssh -i %SSH_KEY% -o StrictHostKeyChecking=no %SSH_USER%@13.60.167.75 "docker network create magic-net || true; docker run -d --name mongo --network magic-net --restart unless-stopped mongo:latest || true; docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}; docker rm -f magicurl-app || true; docker run -d --name magicurl-app --network magic-net -p 80:3000 --restart unless-stopped -e MONGO_URI='mongodb://mongo:27017/magicurl' ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+                        ssh -i %SSH_KEY% -o StrictHostKeyChecking=no %SSH_USER%@16.171.31.6 "docker network create magic-net || true; docker run -d --name mongo --network magic-net --restart unless-stopped mongo:latest || true; docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}; docker rm -f magicurl-app || true; docker run -d --name magicurl-app --network magic-net -p 80:3000 --restart unless-stopped -e MONGO_URI='mongodb://mongo:27017/magicurl' ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                         """
                     }
                 }
