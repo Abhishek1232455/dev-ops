@@ -22,7 +22,9 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} ."
+                    dir('MagicURL') {
+                        bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} ."
+                    }
                 }
             }
         }
@@ -30,13 +32,15 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Run backend tests or basic health check
-                    bat """
-                    docker run --rm -p 3000:3000 -d --name magicurl-test ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                    timeout /t 10
-                    curl -f http://localhost:3000/health
-                    docker rm -f magicurl-test
-                    """
+                    dir('MagicURL') {
+                        // Run backend tests or basic health check
+                        bat """
+                        docker run --rm -p 3000:3000 -d --name magicurl-test ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+                        timeout /t 10
+                        curl -f http://localhost:3000/health
+                        docker rm -f magicurl-test
+                        """
+                    }
                 }
             }
         }
@@ -67,7 +71,7 @@ pipeline {
 
     post {
         always {
-            cleanWs()
+            deleteDir()
         }
     }
 }
