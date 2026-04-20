@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        REGISTRY_CREDENTIALS = credentials('docker-registry-creds')
         DOCKER_REGISTRY = 'your-docker-registry.example.com'
         IMAGE_NAME = 'magic-url-app'
         IMAGE_TAG = "${env.BUILD_NUMBER}"
@@ -23,7 +22,7 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    sh "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} ."
+                    bat "docker build -t ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG} ."
                 }
             }
         }
@@ -32,9 +31,9 @@ pipeline {
             steps {
                 script {
                     // Run backend tests or basic health check
-                    sh """
+                    bat """
                     docker run --rm -p 3000:3000 -d --name magicurl-test ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                    sleep 10
+                    timeout /t 10
                     curl -f http://localhost:3000/health
                     docker rm -f magicurl-test
                     """
@@ -45,8 +44,8 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: "${REGISTRY_CREDENTIALS}", url: "https://${DOCKER_REGISTRY}") {
-                        sh "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
+                    withDockerRegistry(credentialsId: 'docker-registry-creds', url: "https://${DOCKER_REGISTRY}") {
+                        bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
             }
@@ -57,14 +56,8 @@ pipeline {
                 script {
                     // Replace 'ec2-ssh-creds' with your Jenkins SSH credentials ID
                     sshagent (credentials: ['ec2-ssh-creds']) {
-                        sh """
-                        ssh -o StrictHostKeyChecking=no ubuntu@your-ec2-host << 'EOF'
-                        docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                        docker rm -f magicurl-app || true
-                        docker run -d --name magicurl-app -p 80:3000 --restart unless-stopped \\
-                          -e MONGO_URI='mongodb://mongo:27017/magicurl' \\
-                          ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                        EOF
+                        bat """
+                        ssh -o StrictHostKeyChecking=no ubuntu@your-ec2-host "docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}; docker rm -f magicurl-app || true; docker run -d --name magicurl-app -p 80:3000 --restart unless-stopped -e MONGO_URI='mongodb://mongo:27017/magicurl' ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                         """
                     }
                 }
