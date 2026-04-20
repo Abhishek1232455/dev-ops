@@ -36,7 +36,7 @@ pipeline {
                         // Run backend tests or basic health check
                         bat """
                         docker run --rm -p 3000:3000 -d --name magicurl-test ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                        timeout /t 10
+                        ping -n 11 127.0.0.1 > nul
                         curl -f http://localhost:3000/health
                         docker rm -f magicurl-test
                         """
@@ -48,7 +48,8 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
-                    withDockerRegistry(credentialsId: 'docker-registry-creds', url: "") {
+                    withCredentials([usernamePassword(credentialsId: 'docker-registry-creds', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
+                        bat "docker login -u %DOCKER_USER% -p %DOCKER_PASS%"
                         bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
                     }
                 }
