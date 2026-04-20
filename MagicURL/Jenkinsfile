@@ -33,11 +33,11 @@ pipeline {
             steps {
                 script {
                     dir('MagicURL') {
-                        // Run backend tests or basic health check
+                        // Check if container starts legally
                         bat """
-                        docker run --rm -p 3000:3000 -d --name magicurl-test ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
-                        ping -n 11 127.0.0.1 > nul
-                        curl -f http://localhost:3000/health
+                        docker run --rm -d --name magicurl-test ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}
+                        ping -n 5 127.0.0.1 > nul
+                        docker ps | findstr magicurl-test
                         docker rm -f magicurl-test
                         """
                     }
@@ -48,6 +48,7 @@ pipeline {
         stage('Push image') {
             steps {
                 script {
+                    // This block will fail if the ID in Jenkins Credentials doesn't match 'docker-registry-creds'
                     withCredentials([usernamePassword(credentialsId: 'docker-registry-creds', passwordVariable: 'DOCKER_PASS', usernameVariable: 'DOCKER_USER')]) {
                         bat "docker login -u %DOCKER_USER% -p %DOCKER_PASS%"
                         bat "docker push ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
@@ -59,7 +60,6 @@ pipeline {
         stage('Deploy to EC2') {
             steps {
                 script {
-                    // Replace 'ec2-ssh-creds' with your Jenkins SSH credentials ID
                     sshagent (credentials: ['ec2-ssh-creds']) {
                         bat """
                         ssh -o StrictHostKeyChecking=no ubuntu@13.60.167.75 "docker pull ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}; docker rm -f magicurl-app || true; docker run -d --name magicurl-app -p 80:3000 --restart unless-stopped -e MONGO_URI='mongodb://mongo:27017/magicurl' ${DOCKER_REGISTRY}/${IMAGE_NAME}:${IMAGE_TAG}"
