@@ -1,19 +1,19 @@
 :root {
-  --bg-gradient: radial-gradient(circle at top left, #5f4b56 0, #3b3037 42%, #1f1a1f 100%);
-  --accent-raisin: #5f4b56;
-  --accent-caramel: #c78b52;
-  --accent-caramel-soft: #ddb188;
-  --glass-bg: rgba(52, 43, 48, 0.78);
-  --glass-border: rgba(221, 177, 136, 0.35);
-  --text-main: #f2e7dc;
-  --text-muted: #c9b8aa;
+  --bg-gradient: radial-gradient(circle at top left, #8B004B 0, #5c0032 42%, #2e0019 100%);
+  --accent-raisin: #8B004B;
+  --accent-caramel: #F2F0E6;
+  --accent-caramel-soft: #FFFFFF;
+  --glass-bg: rgba(139, 0, 75, 0.78);
+  --glass-border: rgba(242, 240, 230, 0.35);
+  --text-main: #F2F0E6;
+  --text-muted: #E0DFD8;
   --error: #ff8b7a;
   --success: #e0b36d;
   --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.7);
   --radius-xl: 22px;
   --transition-fast: 160ms ease-out;
   --transition-med: 260ms ease-out;
-  --ring-glow: 0 0 25px rgba(199, 139, 82, 0.68);
+  --ring-glow: 0 0 25px rgba(242, 240, 230, 0.68);
 }
 
 *,
@@ -64,8 +64,8 @@ body {
 .stars {
   background-image:
     radial-gradient(circle at 10% 20%, rgba(255, 255, 255, 0.22) 0, transparent 40%),
-    radial-gradient(circle at 80% 10%, rgba(199, 139, 82, 0.32) 0, transparent 45%),
-    radial-gradient(circle at 90% 80%, rgba(122, 93, 109, 0.28) 0, transparent 45%);
+    radial-gradient(circle at 80% 10%, rgba(242, 240, 230, 0.32) 0, transparent 45%),
+    radial-gradient(circle at 90% 80%, rgba(180, 0, 95, 0.28) 0, transparent 45%);
   opacity: 0.4;
   mix-blend-mode: screen;
   filter: blur(1px);
@@ -85,7 +85,7 @@ body {
 .nebula::before {
   width: 340px;
   height: 340px;
-  background: conic-gradient(from 180deg, rgba(95, 75, 86, 0.88), rgba(199, 139, 82, 0.9), rgba(221, 177, 136, 0.84), rgba(95, 75, 86, 0.88));
+  background: conic-gradient(from 180deg, rgba(139, 0, 75, 0.88), rgba(242, 240, 230, 0.9), rgba(255, 255, 255, 0.84), rgba(139, 0, 75, 0.88));
   top: -80px;
   right: -80px;
 }
@@ -93,7 +93,7 @@ body {
 .nebula::after {
   width: 280px;
   height: 280px;
-  background: radial-gradient(circle, rgba(199, 139, 82, 0.96), rgba(95, 75, 86, 0.95));
+  background: radial-gradient(circle, rgba(242, 240, 230, 0.96), rgba(139, 0, 75, 0.95));
   bottom: -60px;
   left: -40px;
   animation-delay: 3s;
@@ -110,8 +110,8 @@ body {
   margin: 0 0 0.6rem;
   color: #f9fafb;
   text-shadow:
-    0 0 18px rgba(95, 75, 86, 0.9),
-    0 0 38px rgba(199, 139, 82, 0.72);
+    0 0 18px rgba(139, 0, 75, 0.9),
+    0 0 38px rgba(242, 240, 230, 0.72);
 }
 
 .hero-title span {
@@ -143,7 +143,7 @@ body {
   inset: -2px;
   border-radius: inherit;
   border: 1px solid transparent;
-  background: conic-gradient(from 190deg, rgba(199, 139, 82, 0.9), rgba(221, 177, 136, 0.78), rgba(95, 75, 86, 0.82), rgba(199, 139, 82, 0.9));
+  background: conic-gradient(from 190deg, rgba(242, 240, 230, 0.9), rgba(255, 255, 255, 0.78), rgba(139, 0, 75, 0.82), rgba(242, 240, 230, 0.9));
   mask: linear-gradient(#000 0 0) padding-box, linear-gradient(#000 0 0);
   mask-composite: exclude;
   opacity: 0.35;
@@ -174,7 +174,7 @@ body {
 .input-wrapper {
   position: relative;
   border-radius: 999px;
-  background: radial-gradient(circle at top left, rgba(104, 85, 96, 0.8), rgba(46, 38, 43, 0.98));
+  background: radial-gradient(circle at top left, rgba(110, 0, 60, 0.8), rgba(60, 0, 30, 0.98));
   padding: 1px;
   overflow: hidden;
 }
@@ -183,7 +183,7 @@ body {
   content: "";
   position: absolute;
   inset: -40%;
-  background: conic-gradient(from 200deg, rgba(199, 139, 82, 0.74), rgba(221, 177, 136, 0.72), rgba(95, 75, 86, 0.7), rgba(199, 139, 82, 0.74));
+  background: conic-gradient(from 200deg, rgba(242, 240, 230, 0.74), rgba(255, 255, 255, 0.72), rgba(139, 0, 75, 0.7), rgba(242, 240, 230, 0.74));
   opacity: 0;
   transition: opacity var(--transition-med);
   animation: spin 22s linear infinite;
@@ -200,7 +200,7 @@ body {
   border-radius: 999px;
   border: none;
   outline: none;
-  background: radial-gradient(circle at top left, rgba(49, 40, 46, 0.9), rgba(42, 34, 39, 1));
+  background: radial-gradient(circle at top left, rgba(60, 0, 30, 0.9), rgba(40, 0, 20, 1));
   padding: 0.9rem 1.1rem;
   color: var(--text-main);
   font-size: 0.96rem;
@@ -215,7 +215,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  box-shadow: 0 0 24px rgba(199, 139, 82, 0.82);
+  box-shadow: 0 0 24px rgba(242, 240, 230, 0.82);
   opacity: 0;
   transition: opacity var(--transition-med);
   pointer-events: none;
@@ -235,11 +235,11 @@ body {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   color: #2a2020;
-  background: radial-gradient(circle at 10% 0%, #e5be96, #cf955f 42%, #b77942 78%, #9a6336 100%);
+  background: radial-gradient(circle at 10% 0%, #ffffff, #F2F0E6 42%, #d0cdc1 78%, #a19f96 100%);
   cursor: pointer;
   box-shadow:
-    0 8px 28px rgba(183, 121, 66, 0.68),
-    0 0 30px rgba(95, 75, 86, 0.78);
+    0 8px 28px rgba(210, 208, 198, 0.68),
+    0 0 30px rgba(139, 0, 75, 0.78);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -266,8 +266,8 @@ body {
 .cast-button:hover {
   transform: translateY(-1px) scale(1.01);
   box-shadow:
-    0 12px 36px rgba(183, 121, 66, 0.75),
-    0 0 40px rgba(95, 75, 86, 0.82);
+    0 12px 36px rgba(210, 208, 198, 0.75),
+    0 0 40px rgba(139, 0, 75, 0.82);
   filter: brightness(1.05);
 }
 
@@ -280,7 +280,7 @@ body {
   transform: translateY(1px) scale(0.99);
   box-shadow:
     0 4px 16px rgba(55, 65, 81, 0.9),
-    0 0 20px rgba(95, 75, 86, 0.7);
+    0 0 20px rgba(139, 0, 75, 0.7);
 }
 
 .status-area {
@@ -305,7 +305,7 @@ body {
   height: 0.55rem;
   border-radius: 999px;
   background: radial-gradient(circle, var(--accent-caramel-soft), var(--accent-raisin));
-  box-shadow: 0 0 18px rgba(199, 139, 82, 0.86);
+  box-shadow: 0 0 18px rgba(242, 240, 230, 0.86);
   animation: pulse 1.35s ease-in-out infinite;
 }
 
@@ -382,14 +382,14 @@ body {
 
 .copy-button:hover {
   background: radial-gradient(circle at top left, rgba(17, 24, 39, 1), rgba(15, 23, 42, 1));
-  border-color: rgba(199, 139, 82, 0.9);
+  border-color: rgba(242, 240, 230, 0.9);
   box-shadow: var(--ring-glow);
   transform: translateY(-1px);
 }
 
 .copy-button:active {
   transform: translateY(0);
-  box-shadow: 0 0 12px rgba(199, 139, 82, 0.7);
+  box-shadow: 0 0 12px rgba(242, 240, 230, 0.7);
 }
 
 .copy-status {
